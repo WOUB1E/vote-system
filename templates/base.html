@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Голосование{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='simple.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('index') }}">Главная</a>
+        {% if session.user_id %}
+            <a href="{{ url_for('create_voting') }}">Создать</a>
+            {% if session.is_admin %}
+                <a href="{{ url_for('manage_votings') }}">Управление</a>
+            {% endif %}
+            <span style="color: white; float: right;">
+                {{ session.login }} | <a href="{{ url_for('logout') }}">Выйти</a>
+            </span>
+        {% else %}
+            <span style="float: right;">
+                <a href="{{ url_for('login') }}">Вход</a> | 
+                <a href="{{ url_for('register') }}">Регистрация</a>
+            </span>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

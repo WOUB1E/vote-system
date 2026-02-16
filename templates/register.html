@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Регистрация</h2>
+
+<form method="POST">
+    <div>
+        <label>Логин:</label>
+        <input type="text" name="login" required>
+    </div>
+    
+    <div>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+    </div>
+    
+    <div>
+        <label>Пароль:</label>
+        <input type="password" name="password" required>
+    </div>
+    
+    <button type="submit">Зарегистрироваться</button>
+</form>
+
+<p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a></p>
+{% endblock %}

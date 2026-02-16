@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Управление голосованиями</h2>
+
+{% if votings %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Автор</th>
+            <th>Дата</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+        {% for voting in votings %}
+        <tr>
+            <td>{{ voting.id }}</td>
+            <td>{{ voting.title }}</td>
+            <td>{{ voting.creator.login }}</td>
+            <td>{{ voting.created_at.strftime('%d.%m.%Y') }}</td>
+            <td>
+                {% if voting.is_active %}Активно{% else %}Завершено{% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('view_voting', voting_id=voting.id) }}" class="btn">Просмотр</a>
+                {% if voting.is_active %}
+                    <a href="{{ url_for('close_voting', voting_id=voting.id) }}" class="btn" onclick="return confirm('Завершить?')">Завершить</a>
+                {% endif %}
+                <a href="{{ url_for('delete_voting', voting_id=voting.id) }}" class="btn" onclick="return confirm('Удалить?')">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Нет голосований</p>
+{% endif %}
+{% endblock %}

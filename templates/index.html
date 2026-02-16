@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - Электронное голосование</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='simple.css') }}">
+</head>
+<body>
+    <!-- Навигация -->
+    <div class="navbar">
+        <a href="{{ url_for('index') }}">Главная</a>
+        
+        {% if session.user_id %}
+            <a href="{{ url_for('create_voting') }}">Создать голосование</a>
+            {% if session.is_admin %}
+                <a href="{{ url_for('manage_votings') }}">Управление</a>
+            {% endif %}
+            <span style="float: right;">
+                {{ session.login }} | <a href="{{ url_for('logout') }}">Выйти</a>
+            </span>
+        {% else %}
+            <span style="float: right;">
+                <a href="{{ url_for('login') }}">Вход</a> | 
+                <a href="{{ url_for('register') }}">Регистрация</a>
+            </span>
+        {% endif %}
+    </div>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <!-- Flash сообщения -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Заголовок -->
+        <h1>Активные голосования</h1>
+
+        <!-- Список голосований -->
+        {% if votings %}
+            {% for voting in votings %}
+                <div class="voting-item">
+                    <h3>{{ voting.title }}</h3>
+                    <p>{{ voting.description or 'Нет описания' }}</p>
+                    <p>
+                        <strong>Автор:</strong> {{ voting.creator.login }} | 
+                        <strong>Дата:</strong> {{ voting.created_at.strftime('%d.%m.%Y') }} |
+                        <strong>Голосов:</strong> {{ voting.votes|length }}
+                    </p>
+                    <a href="{{ url_for('view_voting', voting_id=voting.id) }}" class="btn">Перейти к голосованию</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Если нет голосований -->
+            <div style="text-align: center; padding: 50px; border: 1px solid #ddd;">
+                <p style="font-size: 18px;">Нет активных голосований</p>
+                {% if session.user_id %}
+                    <p><a href="{{ url_for('create_voting') }}" class="btn">Создать первое голосование</a></p>
+                {% else %}
+                    <p><a href="{{ url_for('login') }}" class="btn">Войти</a> чтобы создать голосование</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

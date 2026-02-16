@@ -1,0 +1,111 @@
+/* Минимальные стили */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    background: #f0f0f0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+/* Навигация */
+.navbar {
+    background: #333;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Формы */
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ddd;
+}
+
+button, .btn {
+    background: #333;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+button:hover, .btn:hover {
+    background: #555;
+}
+
+/* Карточки */
+.voting-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+}
+
+/* Сообщения */
+.flash {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+}
+
+.flash.success {
+    background: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.flash.error {
+    background: #f2dede;
+    border-color: #ebccd1;
+}
+
+/* Таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background: #f0f0f0;
+}
+
+/* Результаты голосования */
+.progress {
+    background: #f0f0f0;
+    height: 20px;
+    margin: 5px 0;
+}
+
+.progress-bar {
+    background: #333;
+    height: 20px;
+    color: white;
+    text-align: center;
+    line-height: 20px;
+}
