@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import json
@@ -106,15 +105,12 @@ def logout():
     flash('Вы вышли', 'info')
     return redirect(url_for('index'))
 
+# Создание голосования
 @app.route('/create', methods=['GET', 'POST'])
-@login_required
 def create_voting():
-    # ОБЯЗАТЕЛЬНО: Проверка прав доступа
-    if current_user.role != 'admin':
-        flash("Access denied") # Текст для соответствия тесту
-        return redirect(url_for('index'))
-    
-    # ... ваш существующий код логики создания ...
+    if 'user_id' not in session:
+        flash('Сначала войдите', 'error')
+        return redirect(url_for('login'))
     
     if request.method == 'POST':
         title = request.form['title']
